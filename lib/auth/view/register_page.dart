@@ -14,16 +14,16 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authCubit = BlocProvider.of<AuthCubit>(context);
+    final cubit = BlocProvider.of<RegisterCubit>(context);
 
     return BlocConsumer<RegisterCubit, RegisterState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state.status == RegisterStateStatus.requestRegister) {
-          authCubit.register(state.email, state.password);
+          await authCubit.register(state.email, state.password);
+          cubit.resetStatus();
         }
       },
       builder: (context, state) {
-        final cubit = BlocProvider.of<RegisterCubit>(context);
-
         return Scaffold(
           extendBody: true,
           extendBodyBehindAppBar: true,

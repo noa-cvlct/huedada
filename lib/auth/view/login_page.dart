@@ -15,16 +15,16 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authCubit = BlocProvider.of<AuthCubit>(context);
+    final cubit = BlocProvider.of<LoginCubit>(context);
 
     return BlocConsumer<LoginCubit, LoginState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state.status == LoginStateStatus.requestLogin) {
-          authCubit.login(state.email, state.password);
+          await authCubit.login(state.email, state.password);
+          cubit.resetStatus();
         }
       },
       builder: (context, state) {
-        final cubit = BlocProvider.of<LoginCubit>(context);
-
         return Scaffold(
           extendBody: true,
           extendBodyBehindAppBar: true,
@@ -89,6 +89,9 @@ class LoginPage extends StatelessWidget {
                         child: const Text('Login'),
                       ),
                       TextButton(
+                        style: TextButton.styleFrom(
+                          minimumSize: const Size.fromHeight(48),
+                        ),
                         onPressed: () {
                           AutoRouter.of(context).push(const RegisterRoute());
                         },

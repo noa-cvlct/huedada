@@ -7,17 +7,16 @@ part 'login_state.dart';
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(const LoginState());
 
-  void emailChanged(String value) {
-    emit(state.copyWith(email: value, clearEmailError: true));
-  }
+  void emailChanged(String value) =>
+      emit(state.copyWith(email: value, clearEmailError: true));
 
-  void passwordChanged(String value) {
-    emit(state.copyWith(password: value, clearPasswordError: true));
-  }
+  void passwordChanged(String value) =>
+      emit(state.copyWith(password: value, clearPasswordError: true));
 
-  void toggleObscurePassword() {
-    emit(state.copyWith(obscurePassword: !state.obscurePassword));
-  }
+  void toggleObscurePassword() =>
+      emit(state.copyWith(obscurePassword: !state.obscurePassword));
+
+  void resetStatus() => emit(state.copyWith(status: LoginStateStatus.initial));
 
   void checkForm() {
     AuthErrors? emailError, passwordError;
@@ -36,6 +35,5 @@ class LoginCubit extends Cubit<LoginState> {
             : LoginStateStatus.formInvalid,
       ),
     );
-    emit(state.copyWith(status: LoginStateStatus.initial));
   }
 }

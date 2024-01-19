@@ -7,24 +7,22 @@ part 'register_state.dart';
 class RegisterCubit extends Cubit<RegisterState> {
   RegisterCubit() : super(const RegisterState());
 
-  void emailChanged(String value) {
-    emit(state.copyWith(email: value, clearEmailError: true));
-  }
+  void emailChanged(String value) =>
+      emit(state.copyWith(email: value, clearEmailError: true));
 
-  void passwordChanged(String value) {
-    emit(state.copyWith(password: value, clearPasswordError: true));
-  }
+  void passwordChanged(String value) =>
+      emit(state.copyWith(password: value, clearPasswordError: true));
 
-  void confirmPasswordChanged(String value) {
-    emit(state.copyWith(
-      confirmPassword: value,
-      clearConfirmPasswordError: true,
-    ));
-  }
+  void confirmPasswordChanged(String value) => emit(state.copyWith(
+        confirmPassword: value,
+        clearConfirmPasswordError: true,
+      ));
 
-  void toggleObscurePassword() {
-    emit(state.copyWith(obscurePassword: !state.obscurePassword));
-  }
+  void toggleObscurePassword() =>
+      emit(state.copyWith(obscurePassword: !state.obscurePassword));
+
+  void resetStatus() =>
+      emit(state.copyWith(status: RegisterStateStatus.initial));
 
   void checkForm() {
     AuthErrors? emailError, passwordError, confirmPasswordError;

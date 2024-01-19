@@ -2,16 +2,11 @@ import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hue_dada/auth/bloc/auth_state.dart';
 import 'package:hue_dada/auth/model/auth_errors.dart';
-import 'package:hue_dada/auth/repository/auth_repository.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit(AuthRepository authRepository)
-      : _authRepository = authRepository,
-        super(const AuthState()) {
+  AuthCubit() : super(const AuthState()) {
     listenAuthChanges();
   }
-
-  final AuthRepository _authRepository;
 
   void listenAuthChanges() {
     FirebaseAuth.instance.authStateChanges().listen((user) {
@@ -19,19 +14,18 @@ class AuthCubit extends Cubit<AuthState> {
     });
   }
 
-  void register(String email, String password) async {
+  Future<void> register(String email, String password) async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      await _authRepository.createUserDocument();
     } on FirebaseAuthException catch (e) {
       emitError(e.code);
     }
   }
 
-  void login(String email, String password) async {
+  Future<void> login(String email, String password) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
@@ -42,7 +36,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  void logout() async {
+  Future<void> logout() async {
     await FirebaseAuth.instance.signOut();
   }
 
