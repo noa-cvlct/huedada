@@ -10,6 +10,7 @@ class InputField extends StatelessWidget {
     this.keyboardType,
     this.suffixIcon,
     this.onChanged,
+    this.onEditingComplete,
   });
 
   final String? label;
@@ -18,7 +19,8 @@ class InputField extends StatelessWidget {
   final bool? obscureText;
   final TextInputType? keyboardType;
   final Widget? suffixIcon;
-  final Function(String)? onChanged;
+  final ValueChanged<String>? onChanged;
+  final VoidCallback? onEditingComplete;
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +75,7 @@ class InputField extends StatelessWidget {
               suffixIconColor: Colors.grey,
             ),
             onChanged: onChanged,
+            onEditingComplete: onEditingComplete,
           ),
         ),
         if (error != null)
