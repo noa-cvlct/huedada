@@ -18,7 +18,13 @@ class OptionsBottomSheet extends StatelessWidget {
           onPressed: () {
             router
               ..pop()
-              ..push(const CreateLightRoute());
+              ..push(
+                const RoomRouterRoute(
+                  children: [
+                    CreateLightRoute(),
+                  ],
+                ),
+              );
           },
           child: const Text('Add lights'),
         ),
@@ -29,7 +35,13 @@ class OptionsBottomSheet extends StatelessWidget {
           onPressed: () {
             router
               ..pop()
-              ..push(const CreateRoomRoute());
+              ..push(
+                const RoomRouterRoute(
+                  children: [
+                    CreateRoomRouterRoute(),
+                  ],
+                ),
+              );
           },
           child: const Text('Add a new room'),
         ),

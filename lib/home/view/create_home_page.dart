@@ -43,7 +43,7 @@ class CreateHomePage extends StatelessWidget {
                     ],
                   ),
                 ),
-                if (state.status == CreateHomeStatus.loading)
+                if (state.status == CreateHomeStateStatus.loading)
                   const LoadingDialog(),
               ],
             ),

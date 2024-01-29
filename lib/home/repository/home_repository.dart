@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:hue_dada/home/model/home.dart';
 import 'package:hue_dada/room/model/room.dart';
 
@@ -20,15 +21,17 @@ class HomeRepository {
   CollectionReference getUserRoomsCollection() =>
       getUserHome().collection(roomCollection);
 
-  Future<void> addRoom(Room room) async {
-    await getUserRoomsCollection().add(room.toFirebase());
+  Future<void> createRoom(String name, IconData iconData) async {
+    final doc = getUserRoomsCollection().doc();
+    final room = Room(id: doc.id, name: name, icon: iconData);
+    await doc.set(room.toFirebase());
   }
 
   Future<void> removeRoom(Room room) async {
     await getUserRoomsCollection().doc(room.id).delete();
   }
 
-  Future<void> switchLightState(Home home, bool lightState) async {
+  Future<void> switchLightState(bool lightState) async {
     await getUserHome().update({
       'isOn': lightState,
     });

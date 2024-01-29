@@ -7,17 +7,22 @@ import 'package:hue_dada/room/model/room.dart';
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit(HomeRepository homeRepository)
-      : _homeRepository = homeRepository,
-        super(const HomeState());
+  HomeCubit(this._homeRepository) : super(const HomeState());
 
   final HomeRepository _homeRepository;
 
+  bool get canSwitchLightState =>
+      state.home != null &&
+      state.status != HomeStateStatus.homeLightStateUpdated &&
+      state.rooms.any((room) => room.lights != null && room.lights!.isNotEmpty);
+
   Future<void> switchLightState(bool lightState) async {
     if (state.home == null || state.rooms.isEmpty) return;
-    await _homeRepository.switchLightState(state.home!, lightState);
+    emit(state.copyWith(status: HomeStateStatus.updatingHomeLightState));
+    await _homeRepository.switchLightState(lightState);
     emit(state.copyWith(
       home: state.home!.copyWith(isOn: lightState),
+      status: HomeStateStatus.homeLightStateUpdated,
     ));
   }
 

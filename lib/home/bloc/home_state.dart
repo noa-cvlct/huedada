@@ -35,6 +35,8 @@ class HomeState extends Equatable {
 enum HomeStateStatus {
   initial,
   listenedHomeChanges,
+  homeLightStateUpdated,
+  updatingHomeLightState,
   loading,
   success,
   failure,

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hue_dada/home/bloc/home_cubit.dart';
 import 'package:hue_dada/home/view/widgets/options_bottom_sheet.dart';
+import 'package:hue_dada/navigation/app_router.dart';
+import 'package:hue_dada/widgets/gradient_button.dart';
 
 @RoutePage()
 class HomePage extends StatelessWidget {
@@ -11,6 +13,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final router = AutoRouter.of(context);
+
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
         final cubit = BlocProvider.of<HomeCubit>(context);
@@ -19,17 +22,19 @@ class HomePage extends StatelessWidget {
             actions: [
               Switch(
                 value: state.home?.isOn ?? false,
-                onChanged: cubit.switchLightState,
+                onChanged:
+                    cubit.canSwitchLightState ? cubit.switchLightState : null,
               ),
               IconButton(
                 icon: const Icon(Icons.more_vert),
                 onPressed: () => showModalBottomSheet(
-                    showDragHandle: true,
-                    useRootNavigator: true,
-                    isScrollControlled: true,
-                    context: context,
-                    builder: (context) => const OptionsBottomSheet()),
-              )
+                  showDragHandle: true,
+                  useRootNavigator: true,
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (context) => const OptionsBottomSheet(),
+                ),
+              ),
             ],
           ),
           body: state.home == null
@@ -39,19 +44,68 @@ class HomePage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Home', style: TextStyle(fontSize: 24)),
+                      Text(state.home!.name,
+                          style: const TextStyle(fontSize: 24)),
                       const SizedBox(height: 32),
-                      const Text('ROOMS', style: TextStyle(fontSize: 12)),
                       state.rooms.isEmpty
-                          ? const Text('Add a room or a light to get started')
+                          ? Column(
+                              children: [
+                                Text(
+                                  'Add rooms',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge
+                                      ?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  'You have no room in ${state.home!.name}. '
+                                  'First add a few rooms to control your home.',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(
+                                        color: Colors.grey.shade700,
+                                      ),
+                                ),
+                                const SizedBox(height: 16),
+                                GradientButton(
+                                  backgroundGradient: const LinearGradient(
+                                    colors: [
+                                      Colors.orange,
+                                      Colors.deepOrange,
+                                    ],
+                                  ),
+                                  onPressed: () => router.push(
+                                    const RoomRouterRoute(
+                                      children: [
+                                        CreateRoomRouterRoute(),
+                                      ],
+                                    ),
+                                  ),
+                                  child: const Text(
+                                    'Add room',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                )
+                              ],
+                            )
                           : ListView(
                               shrinkWrap: true,
-                              children: state.rooms
-                                  .map((room) => ListTile(
-                                        title: Text(room.name),
-                                        subtitle: Text(room.id),
-                                      ))
-                                  .toList(),
+                              children: [
+                                const Text(
+                                  'ROOMS',
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                                const SizedBox(height: 8),
+                                ...state.rooms.map((room) => ListTile(
+                                      title: Text(room.name),
+                                      subtitle: Text(room.id),
+                                    ))
+                              ],
                             ),
                     ],
                   ),

@@ -3,15 +3,15 @@ part of 'create_home_cubit.dart';
 class CreateHomeState extends Equatable {
   const CreateHomeState({
     this.name = '',
-    this.status = CreateHomeStatus.initial,
+    this.status = CreateHomeStateStatus.initial,
   });
 
   final String name;
-  final CreateHomeStatus status;
+  final CreateHomeStateStatus status;
 
   CreateHomeState copyWith({
     String? name,
-    CreateHomeStatus? status,
+    CreateHomeStateStatus? status,
   }) {
     return CreateHomeState(
       name: name ?? this.name,
@@ -26,7 +26,7 @@ class CreateHomeState extends Equatable {
       ];
 }
 
-enum CreateHomeStatus {
+enum CreateHomeStateStatus {
   initial,
   loading,
   success,
