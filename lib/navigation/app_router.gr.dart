@@ -33,10 +33,22 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const CreateLightPage(),
       );
     },
-    CreateRoomRoute.name: (routeData) {
+    CreateRoomNameRoomRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const CreateRoomPage(),
+        child: const CreateRoomNameRoomPage(),
+      );
+    },
+    CreateRoomRouterRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const CreateRoomRouterPage(),
+      );
+    },
+    CreateRoomSelectIconRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const CreateRoomSelectIconPage(),
       );
     },
     HomeRoute.name: (routeData) {
@@ -67,6 +79,12 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const RoomPage(),
+      );
+    },
+    RoomRouterRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const RoomRouterPage(),
       );
     },
   };
@@ -115,15 +133,43 @@ class CreateLightRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [CreateRoomPage]
-class CreateRoomRoute extends PageRouteInfo<void> {
-  const CreateRoomRoute({List<PageRouteInfo>? children})
+/// [CreateRoomNameRoomPage]
+class CreateRoomNameRoomRoute extends PageRouteInfo<void> {
+  const CreateRoomNameRoomRoute({List<PageRouteInfo>? children})
       : super(
-          CreateRoomRoute.name,
+          CreateRoomNameRoomRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'CreateRoomRoute';
+  static const String name = 'CreateRoomNameRoomRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [CreateRoomRouterPage]
+class CreateRoomRouterRoute extends PageRouteInfo<void> {
+  const CreateRoomRouterRoute({List<PageRouteInfo>? children})
+      : super(
+          CreateRoomRouterRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CreateRoomRouterRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [CreateRoomSelectIconPage]
+class CreateRoomSelectIconRoute extends PageRouteInfo<void> {
+  const CreateRoomSelectIconRoute({List<PageRouteInfo>? children})
+      : super(
+          CreateRoomSelectIconRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CreateRoomSelectIconRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -194,6 +240,20 @@ class RoomRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'RoomRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [RoomRouterPage]
+class RoomRouterRoute extends PageRouteInfo<void> {
+  const RoomRouterRoute({List<PageRouteInfo>? children})
+      : super(
+          RoomRouterRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'RoomRouterRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

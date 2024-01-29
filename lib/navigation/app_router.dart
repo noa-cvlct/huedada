@@ -6,8 +6,11 @@ import 'package:hue_dada/home/view/create_home_page.dart';
 import 'package:hue_dada/home/view/home_page.dart';
 import 'package:hue_dada/home/view/home_router.dart';
 import 'package:hue_dada/room/view/create_light_page.dart';
-import 'package:hue_dada/room/view/create_room_page.dart';
+import 'package:hue_dada/room/view/create_room_page/create_room_name_room_page.dart';
+import 'package:hue_dada/room/view/create_room_page/create_room_router.dart';
+import 'package:hue_dada/room/view/create_room_page/create_room_select_icon_page.dart';
 import 'package:hue_dada/room/view/room_page.dart';
+import 'package:hue_dada/room/view/room_router.dart';
 
 part 'app_router.gr.dart';
 
@@ -30,15 +33,33 @@ class AppRouter extends _$AppRouter {
             ),
             AutoRoute(
               path: 'room',
-              page: RoomRoute.page,
-            ),
-            AutoRoute(
-              path: 'create-room',
-              page: CreateRoomRoute.page,
-            ),
-            AutoRoute(
-              path: 'create-light',
-              page: CreateLightRoute.page,
+              page: RoomRouterRoute.page,
+              children: [
+                AutoRoute(
+                  initial: true,
+                  path: '',
+                  page: RoomRoute.page,
+                ),
+                AutoRoute(
+                  path: 'create-room',
+                  page: CreateRoomRouterRoute.page,
+                  children: [
+                    AutoRoute(
+                      initial: true,
+                      path: 'select-icon',
+                      page: CreateRoomSelectIconRoute.page,
+                    ),
+                    AutoRoute(
+                      path: 'name-room',
+                      page: CreateRoomNameRoomRoute.page,
+                    ),
+                  ],
+                ),
+                AutoRoute(
+                  path: 'create-light',
+                  page: CreateLightRoute.page,
+                ),
+              ],
             ),
           ],
         ),

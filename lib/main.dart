@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,7 +15,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  FirebaseAuth.instance.signOut();
+  // FirebaseAuth.instance.signOut();
 
   runApp(App());
 }
@@ -28,35 +27,31 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiRepositoryProvider(
+    return MultiBlocProvider(
       providers: [
+        BlocProvider<AuthCubit>(
+          create: (context) => AuthCubit(),
+          child: Container(),
+        ),
         RepositoryProvider<HomeRepository>(
           create: (context) => HomeRepository(),
         ),
       ],
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider<AuthCubit>(
-            create: (context) => AuthCubit(),
-            child: Container(),
-          )
-        ],
-        child: BlocListener<AuthCubit, AuthState>(
-          listenWhen: (previous, current) => previous.user != current.user,
-          listener: (context, state) {
-            if (state.user == null) {
-              _appRouter.replace(const LoginRoute());
-            } else {
-              _appRouter.replace(const HomeRouterRoute());
-            }
-          },
-          child: MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              fontFamily: 'Sora',
-            ),
-            routerConfig: _appRouter.config(),
+      child: BlocListener<AuthCubit, AuthState>(
+        listenWhen: (previous, current) => previous.user != current.user,
+        listener: (context, state) {
+          if (state.user == null) {
+            _appRouter.replace(const LoginRoute());
+          } else {
+            _appRouter.replace(const HomeRouterRoute());
+          }
+        },
+        child: MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            fontFamily: 'Sora',
           ),
+          routerConfig: _appRouter.config(),
         ),
       ),
     );
