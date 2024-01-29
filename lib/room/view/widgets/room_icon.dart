@@ -5,10 +5,12 @@ class RoomIcon extends StatelessWidget {
     super.key,
     required this.label,
     required this.iconData,
+    required this.onPressed,
   });
 
   final String label;
   final IconData iconData;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -16,14 +18,15 @@ class RoomIcon extends StatelessWidget {
       dimension: 90,
       child: Column(
         children: [
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              color: Colors.grey,
-              borderRadius: BorderRadius.circular(48),
+          IconButton(
+            onPressed: onPressed,
+            color: Colors.white,
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(
+                Colors.grey,
+              ),
             ),
-            child: Icon(
+            icon: Icon(
               iconData,
               color: Colors.white,
             ),
@@ -33,7 +36,6 @@ class RoomIcon extends StatelessWidget {
             label,
             textAlign: TextAlign.center,
             style: const TextStyle(
-              color: Colors.white,
               fontSize: 12,
             ),
           ),

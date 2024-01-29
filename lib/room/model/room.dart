@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hue_dada/light/model/light.dart';
 
 class Room {
   const Room({
@@ -7,6 +8,7 @@ class Room {
     required this.icon,
     this.isOn = false,
     this.brightness = 100,
+    this.lights,
   });
 
   factory Room.fromFirebase(String id, Map<String, dynamic> data) {
@@ -24,6 +26,7 @@ class Room {
   final IconData icon;
   final bool isOn;
   final double brightness;
+  final List<Light>? lights;
 
   Room copyWith({
     String? id,
@@ -31,6 +34,7 @@ class Room {
     IconData? icon,
     bool? isOn,
     double? brightness,
+    List<Light>? lights,
   }) {
     return Room(
       id: id ?? this.id,
@@ -38,6 +42,7 @@ class Room {
       icon: icon ?? this.icon,
       isOn: isOn ?? this.isOn,
       brightness: brightness ?? this.brightness,
+      lights: lights ?? this.lights,
     );
   }
 
