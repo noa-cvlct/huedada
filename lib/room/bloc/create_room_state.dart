@@ -27,12 +27,14 @@ class CreateRoomState extends Equatable {
   List<Object?> get props => [
         name,
         icon,
+        status,
       ];
 }
 
 enum CreateRoomStateStatus {
   initial,
   selectedIcon,
+  enteringName,
   selectedName,
   savingRoom,
   roomSaved,

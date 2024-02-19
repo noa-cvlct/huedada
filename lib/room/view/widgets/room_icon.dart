@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hue_dada/theme.dart';
 
 class RoomIcon extends StatelessWidget {
   const RoomIcon({
@@ -22,9 +23,7 @@ class RoomIcon extends StatelessWidget {
             onPressed: onPressed,
             color: Colors.white,
             style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(
-                Colors.grey,
-              ),
+              backgroundColor: MaterialStateProperty.all(lightGrey),
             ),
             icon: Icon(
               iconData,

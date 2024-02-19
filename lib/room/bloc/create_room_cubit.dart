@@ -18,7 +18,8 @@ class CreateRoomCubit extends Cubit<CreateRoomState> {
   }
 
   void nameChanged(String value) {
-    emit(state.copyWith(name: value));
+    emit(state.copyWith(
+        name: value, status: CreateRoomStateStatus.enteringName));
   }
 
   void checkName() {

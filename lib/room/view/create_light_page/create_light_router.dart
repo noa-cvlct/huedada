@@ -3,28 +3,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hue_dada/home/repository/home_repository.dart';
 import 'package:hue_dada/navigation/app_router.dart';
-import 'package:hue_dada/room/bloc/create_room_cubit.dart';
+import 'package:hue_dada/room/bloc/create_light_cubit.dart';
 
 @RoutePage()
-class CreateRoomRouterPage extends StatelessWidget {
-  const CreateRoomRouterPage({super.key});
+class CreateLightRouterPage extends StatelessWidget {
+  const CreateLightRouterPage({super.key, required this.roomId});
+
+  final String roomId;
 
   @override
   Widget build(BuildContext context) {
     final router = AutoRouter.of(context);
 
     return BlocProvider(
-      create: (context) => CreateRoomCubit(
+      create: (context) => CreateLightCubit(
         RepositoryProvider.of<HomeRepository>(context),
+        roomId: roomId,
       ),
-      child: BlocConsumer<CreateRoomCubit, CreateRoomState>(
+      child: BlocConsumer<CreateLightCubit, CreateLightState>(
         listener: (context, state) {
-          if (state.status == CreateRoomStateStatus.selectedIcon) {
-            router.push(const CreateRoomWriteNameRoute());
-          } else if (state.status == CreateRoomStateStatus.selectedName) {
-            context.read<CreateRoomCubit>().createRoom();
-          } else if (state.status == CreateRoomStateStatus.roomSaved) {
-            router.navigate(const HomeRouterRoute());
+          if (state.status == CreateLightStateStatus.selectedIcon) {
+            router.push(const CreateLightWriteNameRoute());
+          } else if (state.status == CreateLightStateStatus.selectedName) {
+            context.read<CreateLightCubit>().createLight();
+          } else if (state.status == CreateLightStateStatus.lightSaved) {
+            router.navigate(RoomRoute(roomId: roomId));
           }
         },
         builder: (context, state) {
@@ -38,7 +41,7 @@ class CreateRoomRouterPage extends StatelessWidget {
             body: Stack(
               children: [
                 const AutoRouter(),
-                if (state.status == CreateRoomStateStatus.savingRoom)
+                if (state.status == CreateLightStateStatus.savingLight)
                   Container(
                     height: double.infinity,
                     width: double.infinity,

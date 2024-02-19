@@ -1,21 +1,22 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:hue_dada/light/model/light.dart';
 
-class Room {
+class Room extends Equatable {
   const Room({
     required this.id,
     required this.name,
     required this.icon,
     this.isOn = false,
     this.brightness = 100,
-    this.lights,
+    this.lights = const [],
   });
 
   factory Room.fromFirebase(String id, Map<String, dynamic> data) {
     return Room(
       id: id,
       name: data['name'],
-      icon: IconData(data['icon']),
+      icon: IconData(data['icon'], fontFamily: 'MaterialIcons'),
       isOn: data['isOn'],
       brightness: data['brightness'],
     );
@@ -25,15 +26,27 @@ class Room {
   final String name;
   final IconData icon;
   final bool isOn;
-  final double brightness;
-  final List<Light>? lights;
+  final int brightness;
+  final List<Light> lights;
+
+  bool hasLightsOnAfterChange(String lightId, bool isOn) {
+    final newLights = lights
+        .map((l) => l.id == lightId ? l.copyWith(isOn: isOn) : l)
+        .toList();
+    return newLights.any((l) => l.isOn);
+  }
+
+  bool get canSwitchLightState => lights.isNotEmpty;
+
+  bool get canChangeBrightness =>
+      lights.isNotEmpty && lights.any((l) => l.isOn);
 
   Room copyWith({
     String? id,
     String? name,
     IconData? icon,
     bool? isOn,
-    double? brightness,
+    int? brightness,
     List<Light>? lights,
   }) {
     return Room(
@@ -54,4 +67,14 @@ class Room {
       'brightness': brightness,
     };
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        name,
+        icon,
+        isOn,
+        brightness,
+        lights,
+      ];
 }
