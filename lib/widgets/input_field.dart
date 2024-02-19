@@ -29,24 +29,11 @@ class InputField extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(48),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0xFFd9d9d9),
-            offset: Offset(5, 5),
-            blurRadius: 10,
-            spreadRadius: 1,
-          ),
-          BoxShadow(
-            color: Colors.white,
-            offset: Offset(-5, -5),
-            blurRadius: 10,
-            spreadRadius: 1,
-          ),
-        ],
       ),
       child: TextField(
         keyboardType: keyboardType,
         obscureText: obscureText ?? false,
+        style: const TextStyle(color: Colors.black),
         decoration: InputDecoration(
           hintText: hint,
           filled: true,
@@ -58,12 +45,12 @@ class InputField extends StatelessWidget {
           labelStyle: const TextStyle(
             color: Colors.grey,
             fontWeight: FontWeight.w700,
+            fontSize: 20,
           ),
-          floatingLabelAlignment: FloatingLabelAlignment.start,
           floatingLabelStyle: const TextStyle(
             color: Colors.grey,
             fontWeight: FontWeight.w800,
-            fontSize: 24,
+            fontSize: 18,
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(48),
