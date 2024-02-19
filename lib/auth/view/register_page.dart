@@ -43,7 +43,7 @@ class RegisterPage extends StatelessWidget {
                         'Register',
                         style:
                             Theme.of(context).textTheme.displayLarge?.copyWith(
-                                  color: Colors.teal.shade200,
+                                  color: Colors.white,
                                   fontWeight: FontWeight.w700,
                                 ),
                       ),

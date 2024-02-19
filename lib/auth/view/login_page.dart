@@ -44,7 +44,7 @@ class LoginPage extends StatelessWidget {
                         'Login',
                         style:
                             Theme.of(context).textTheme.displayLarge?.copyWith(
-                                  color: Colors.blue.shade800,
+                                  color: Colors.white,
                                   fontWeight: FontWeight.w700,
                                 ),
                       ),
