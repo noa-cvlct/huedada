@@ -16,7 +16,7 @@ class CreateHomeCubit extends Cubit<CreateHomeState> {
   Future<void> createHome() async {
     if (state.name.isEmpty) return;
     emit(state.copyWith(status: CreateHomeStateStatus.loading));
-    await _homeRepository.createUserDoc(state.name);
+    await _homeRepository.createUserHomeDoc(state.name);
     emit(state.copyWith(status: CreateHomeStateStatus.success));
   }
 }

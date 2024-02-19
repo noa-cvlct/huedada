@@ -3,23 +3,19 @@ part of 'home_cubit.dart';
 class HomeState extends Equatable {
   const HomeState({
     this.home,
-    this.rooms = const [],
     this.status = HomeStateStatus.initial,
   });
 
   final Home? home;
-  final List<Room> rooms;
   final HomeStateStatus status;
 
   HomeState copyWith({
     Home? home,
-    List<Room>? rooms,
     HomeStateStatus? status,
-    bool clearHome = false,
+    bool nullableHome = false,
   }) {
     return HomeState(
-      home: clearHome ? null : home ?? this.home,
-      rooms: rooms ?? this.rooms,
+      home: nullableHome ? home : home ?? this.home,
       status: status ?? this.status,
     );
   }
@@ -27,17 +23,28 @@ class HomeState extends Equatable {
   @override
   List<Object?> get props => [
         home,
-        rooms,
         status,
       ];
 }
 
 enum HomeStateStatus {
   initial,
-  listenedHomeChanges,
-  homeLightStateUpdated,
+  listenHomeChanges,
+
   updatingHomeLightState,
-  loading,
-  success,
-  failure,
+  homeLightStateUpdated,
+
+  updatingRoomLightState,
+  roomLightStateUpdated,
+  updatingRoomBrightness,
+  roomBrightnessUpdated,
+
+  updatingLightState,
+  lightStateUpdated,
+  updatingLightColor,
+  lightColorUpdated,
+  updatingLightBrightness,
+  lightBrightnessUpdated,
+  updatingLightSyncWithSound,
+  lightSyncWithSoundUpdated,
 }
