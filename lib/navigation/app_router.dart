@@ -1,14 +1,18 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
 import 'package:hue_dada/auth/view/auth_router.dart';
 import 'package:hue_dada/auth/view/login_page.dart';
 import 'package:hue_dada/auth/view/register_page.dart';
 import 'package:hue_dada/home/view/create_home_page.dart';
 import 'package:hue_dada/home/view/home_page.dart';
 import 'package:hue_dada/home/view/home_router.dart';
-import 'package:hue_dada/room/view/create_light_page.dart';
-import 'package:hue_dada/room/view/create_room_page/create_room_name_room_page.dart';
+import 'package:hue_dada/light/view/light_page.dart';
+import 'package:hue_dada/room/view/create_light_page/create_light_router.dart';
+import 'package:hue_dada/room/view/create_light_page/create_light_select_icon_page.dart';
+import 'package:hue_dada/room/view/create_light_page/create_light_write_name_page.dart';
 import 'package:hue_dada/room/view/create_room_page/create_room_router.dart';
 import 'package:hue_dada/room/view/create_room_page/create_room_select_icon_page.dart';
+import 'package:hue_dada/room/view/create_room_page/create_room_write_name_page.dart';
 import 'package:hue_dada/room/view/room_page.dart';
 import 'package:hue_dada/room/view/room_router.dart';
 
@@ -50,14 +54,29 @@ class AppRouter extends _$AppRouter {
                       page: CreateRoomSelectIconRoute.page,
                     ),
                     AutoRoute(
-                      path: 'name-room',
-                      page: CreateRoomNameRoomRoute.page,
+                      path: 'write-name',
+                      page: CreateRoomWriteNameRoute.page,
                     ),
                   ],
                 ),
                 AutoRoute(
+                  path: 'light',
+                  page: LightRoute.page,
+                ),
+                AutoRoute(
                   path: 'create-light',
-                  page: CreateLightRoute.page,
+                  page: CreateLightRouterRoute.page,
+                  children: [
+                    AutoRoute(
+                      initial: true,
+                      path: 'select-icon',
+                      page: CreateLightSelectIconRoute.page,
+                    ),
+                    AutoRoute(
+                      path: 'write-name',
+                      page: CreateLightWriteNameRoute.page,
+                    ),
+                  ],
                 ),
               ],
             ),
