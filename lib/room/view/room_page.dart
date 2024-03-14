@@ -64,9 +64,10 @@ class RoomPage extends StatelessWidget {
                 ),
                 child: BrightnessSlider(
                   value: room.brightness,
-                  onChanged: (value) =>
-                      cubit.changeRoomBrightness(room.id, value.toInt()),
-                  enabled: room.canChangeBrightness,
+                  onChanged: room.canChangeBrightness
+                      ? (value) =>
+                          cubit.changeRoomBrightness(room.id, value.toInt())
+                      : null,
                 ),
               ),
               Expanded(

@@ -78,8 +78,10 @@ class LightPage extends StatelessWidget {
                 ),
                 child: BrightnessSlider(
                   value: light.brightness,
-                  onChanged: (value) =>
-                      cubit.changeLightBrightness(light.id, value.toInt()),
+                  onChanged: light.isOn
+                      ? (value) =>
+                          cubit.changeLightBrightness(light.id, value.toInt())
+                      : null,
                 ),
               ),
               ColorPicker(

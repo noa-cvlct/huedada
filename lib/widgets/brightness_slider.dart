@@ -6,17 +6,23 @@ class BrightnessSlider extends StatelessWidget {
     super.key,
     required this.value,
     required this.onChanged,
-    this.enabled = true,
   });
 
   final int value;
   final ValueChanged<double>? onChanged;
-  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
-    return enabled
-        ? Slider(
+    return onChanged == null
+        ? Container(
+            decoration: BoxDecoration(
+              color: lightGrey,
+              borderRadius: BorderRadius.circular(32),
+            ),
+            margin: const EdgeInsets.all(20),
+            height: 8,
+          )
+        : Slider(
             label: value.round().toString(),
             value: value.toDouble(),
             onChanged: onChanged,
@@ -26,14 +32,6 @@ class BrightnessSlider extends StatelessWidget {
             thumbColor: Colors.white,
             activeColor: Colors.white,
             inactiveColor: lightGrey,
-          )
-        : Container(
-            decoration: BoxDecoration(
-              color: lightGrey,
-              borderRadius: BorderRadius.circular(32),
-            ),
-            margin: const EdgeInsets.all(20),
-            height: 8,
           );
   }
 }
