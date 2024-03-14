@@ -125,6 +125,7 @@ class RoomPage extends StatelessWidget {
                                 gridDelegate:
                                     const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 3,
+                                  childAspectRatio: 0.85,
                                 ),
                                 itemCount: room.lights.length,
                                 itemBuilder: (context, index) =>
