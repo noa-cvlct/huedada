@@ -30,6 +30,12 @@ class AvailableDevicesWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(height: AppBar().preferredSize.height),
+            Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  icon: const Icon(Icons.close),
+                  onPressed: () => context.read<BluetoothPairingCubit>().skip(),
+                )),
             const Text(
               'Available devices',
               style: TextStyle(

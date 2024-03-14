@@ -55,6 +55,10 @@ class BluetoothPairingCubit extends Cubit<BluetoothPairingState> {
     ));
   }
 
+  void skip() {
+    emit(state.copyWith(status: BluetoothPairingStateStatus.initial));
+  }
+
   @override
   Future<void> close() {
     FlutterBluePlus.stopScan();
