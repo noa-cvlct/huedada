@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +7,7 @@ import 'package:hue_dada/auth/bloc/auth_cubit.dart';
 import 'package:hue_dada/auth/bloc/auth_state.dart';
 import 'package:hue_dada/bluetooth/bloc/bluetooth_pairing_cubit.dart';
 import 'package:hue_dada/bluetooth/repository/bluetooth_repository.dart';
+import 'package:hue_dada/home/bloc/home_cubit.dart';
 import 'package:hue_dada/home/repository/home_repository.dart';
 
 import 'firebase_options.dart';
@@ -46,7 +46,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  await FirebaseAuth.instance.signOut();
+  //await FirebaseAuth.instance.signOut();
 
   Bloc.observer = GlobalBlocObserver();
 
@@ -78,6 +78,14 @@ class App extends StatelessWidget {
             create: (context) => BluetoothPairingCubit(
               context.read<BluetoothRepository>(),
             )..startPairing(),
+          ),
+          BlocProvider(
+            create: (context) => HomeCubit(
+              RepositoryProvider.of<HomeRepository>(context),
+              RepositoryProvider.of<BluetoothRepository>(context),
+            )
+              ..listenHome()
+              ..listenRooms(),
           ),
         ],
         child: BlocListener<AuthCubit, AuthState>(

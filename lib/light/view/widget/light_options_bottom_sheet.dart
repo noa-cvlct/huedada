@@ -2,12 +2,16 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hue_dada/home/bloc/home_cubit.dart';
-import 'package:hue_dada/navigation/app_router.dart';
 
-class RoomOptionsBottomSheet extends StatelessWidget {
-  const RoomOptionsBottomSheet({super.key, required this.roomId});
+class LightOptionsBottomSheet extends StatelessWidget {
+  const LightOptionsBottomSheet({
+    super.key,
+    required this.roomId,
+    required this.lightId,
+  });
 
   final String roomId;
+  final String lightId;
 
   @override
   Widget build(BuildContext context) {
@@ -18,17 +22,7 @@ class RoomOptionsBottomSheet extends StatelessWidget {
       children: [
         ListTile(
           title: const Text(
-            'Add light',
-            textAlign: TextAlign.center,
-          ),
-          onTap: () {
-            router.pop();
-            router.push(CreateLightRouterRoute(roomId: roomId));
-          },
-        ),
-        ListTile(
-          title: const Text(
-            'Delete room',
+            'Delete light',
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.red),
           ),
@@ -36,9 +30,9 @@ class RoomOptionsBottomSheet extends StatelessWidget {
             showDialog<void>(
               context: context,
               builder: (context) => AlertDialog(
-                title: const Text('Delete room'),
+                title: const Text('Delete light'),
                 content:
-                    const Text('Are you sure you want to delete this room?'),
+                    const Text('Are you sure you want to delete this light?'),
                 actions: [
                   TextButton(
                     onPressed: router.pop,
@@ -49,8 +43,9 @@ class RoomOptionsBottomSheet extends StatelessWidget {
                       Navigator.of(context)
                         ..pop()
                         ..pop();
-                      BlocProvider.of<HomeCubit>(context).deleteRoom(roomId);
-                      router.navigate(const HomeRoute());
+                      BlocProvider.of<HomeCubit>(context)
+                          .deleteLight(roomId, lightId);
+                      router.back();
                     },
                     child: const Text('Delete'),
                   ),

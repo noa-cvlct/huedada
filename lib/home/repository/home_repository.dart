@@ -32,7 +32,7 @@ class HomeRepository {
     await doc.set(room.toFirebase());
   }
 
-  Future<void> removeRoom(String roomId) async {
+  Future<void> deleteRoom(String roomId) async {
     await getUserRoomsCollection().doc(roomId).delete();
   }
 
@@ -103,6 +103,10 @@ class HomeRepository {
     await getUserRoomLightsCollection(roomId).doc(lightId).update({
       'syncWithSound': syncWithSound,
     });
+  }
+
+  Future<void> deleteLight(String roomId, String lightId) async {
+    await getUserRoomLightsCollection(roomId).doc(lightId).delete();
   }
 
   Stream<Home?> getUserHome() {

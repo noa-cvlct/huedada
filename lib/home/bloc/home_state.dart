@@ -47,4 +47,9 @@ enum HomeStateStatus {
   lightBrightnessUpdated,
   updatingLightSyncWithSound,
   lightSyncWithSoundUpdated,
+
+  deletingRoom,
+  roomDeleted,
+  deletingLight,
+  lightDeleted,
 }

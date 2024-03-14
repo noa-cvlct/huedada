@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:hue_dada/home/bloc/home_cubit.dart';
+import 'package:hue_dada/light/view/widget/light_options_bottom_sheet.dart';
 import 'package:hue_dada/theme.dart';
 import 'package:hue_dada/widgets/brightness_slider.dart';
 import 'package:hue_dada/widgets/input_switch.dart';
@@ -63,6 +64,17 @@ class LightPage extends StatelessWidget {
                     ? (value) => cubit.switchLightState(lightId, value)
                     : null,
               ),
+              IconButton(
+                icon: const Icon(Icons.more_vert, color: Colors.white),
+                onPressed: () => showModalBottomSheet(
+                  showDragHandle: true,
+                  useRootNavigator: true,
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (context) =>
+                      LightOptionsBottomSheet(roomId: roomId, lightId: lightId),
+                ),
+              ),
             ],
           ),
           body: Column(
@@ -70,7 +82,7 @@ class LightPage extends StatelessWidget {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  color: light.color,
+                  color: light.isOn ? light.color : darkGrey,
                   borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(32),
                     bottomRight: Radius.circular(32),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hue_dada/home/bloc/home_cubit.dart';
 import 'package:hue_dada/navigation/app_router.dart';
+import 'package:hue_dada/room/view/widgets/room_options_bottom_sheet.dart';
 import 'package:hue_dada/theme.dart';
 import 'package:hue_dada/widgets/input_switch.dart';
 
@@ -28,6 +29,13 @@ class RoomTileWidget extends StatelessWidget {
           child: InkWell(
             borderRadius: BorderRadius.circular(12),
             onTap: () => router.push(RoomRoute(roomId: room.id)),
+            onLongPress: () => showModalBottomSheet(
+              showDragHandle: true,
+              useRootNavigator: true,
+              isScrollControlled: true,
+              context: context,
+              builder: (context) => RoomOptionsBottomSheet(roomId: room.id),
+            ),
             child: Column(
               children: [
                 ListTile(

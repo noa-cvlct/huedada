@@ -114,6 +114,17 @@ class HomeCubit extends Cubit<HomeState> {
     ));
   }
 
+  Future<void> deleteRoom(String roomId) async {
+    emit(state.copyWith(status: HomeStateStatus.deletingRoom));
+    await _homeRepository.deleteRoom(roomId);
+    emit(state.copyWith(
+      home: state.home!.copyWith(
+        rooms: state.home!.rooms.where((r) => r.id != roomId).toList(),
+      ),
+      status: HomeStateStatus.roomDeleted,
+    ));
+  }
+
   Future<void> switchLightState(String lightId, bool lightState) async {
     emit(state.copyWith(status: HomeStateStatus.updatingLightState));
     final room = state.home!.rooms
@@ -273,6 +284,23 @@ class HomeCubit extends Cubit<HomeState> {
             .toList(),
       ),
       status: HomeStateStatus.lightSyncWithSoundUpdated,
+    ));
+  }
+
+  Future<void> deleteLight(String roomId, String lightId) async {
+    emit(state.copyWith(status: HomeStateStatus.deletingLight));
+    await _homeRepository.deleteLight(roomId, lightId);
+    emit(state.copyWith(
+      home: state.home!.copyWith(
+        rooms: state.home!.rooms
+            .map((r) => r.id == roomId
+                ? r.copyWith(
+                    lights: r.lights.where((l) => l.id != lightId).toList(),
+                  )
+                : r)
+            .toList(),
+      ),
+      status: HomeStateStatus.lightDeleted,
     ));
   }
 
